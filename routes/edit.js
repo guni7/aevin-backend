@@ -200,7 +200,7 @@ router.post('/api/upload/profilePicture/', verify, upload.array('image'), async 
         .toBuffer()
         .then(async (data )=> {
             const result = await cloudinaryProfile.uploadBuffer(data)
-            url = result.url.slice(4) + 's' + result.url.slice(4)
+            url = result.url.slice(0, 4) + 's' + result.url.slice(4)
             icon64 = url
             console.log("icon64", result.url)
         })
@@ -217,7 +217,7 @@ router.post('/api/upload/profilePicture/', verify, upload.array('image'), async 
         .toBuffer()
         .then(async (data )=> {
             const result = await cloudinaryProfile.uploadBuffer(data)
-            url = result.url.slice(4) + 's' + result.url.slice(4)
+            url = result.url.slice(0, 4) + 's' + result.url.slice(4)
             icon192 = url
             console.log("icon192", icon192)
         })
@@ -233,7 +233,7 @@ router.post('/api/upload/profilePicture/', verify, upload.array('image'), async 
         .toBuffer()
         .then(async (data )=> {
             const result = await cloudinaryProfile.uploadBuffer(data)
-            url = result.url.slice(4) + 's' + result.url.slice(4)
+            url = result.url.slice(0, 4) + 's' + result.url.slice(4)
             icon512 = url
             fs.unlinkSync(file.path)
 
