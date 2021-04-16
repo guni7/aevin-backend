@@ -57,17 +57,15 @@ router.post('/api/createPost/', verify, upload.array('image'), async(req, res) =
 
     fs.unlinkSync(path)
 
-    console.log(newPath);
+    url = newPath.url.slice(0,4) + 's' + newPath.url.slice(4)
     //img end
-
-
 
     let postArray = [];
     post = editData.editData[0];
     console.log(editData.editData)
     let content = post.content;
 
-    content[0].url = newPath.url;
+    content[0].url = url;
 
     let postObj = {
         id: uniqid(),
@@ -184,13 +182,13 @@ router.post('/api/upload/profilePicture/', verify, upload.array('image'), async 
 
     //icon generation
     const overlay64 = new Buffer(
-      '<svg><rect x="0" y="0" width="64" height="64" rx="16" ry="16"/></svg>'
+      '<svg><rect x="0" y="0" width="64" height="64" /></svg>'
     )
     const overlay192 = new Buffer(
-      '<svg><rect x="0" y="0" width="192" height="192" rx="48" ry="48"/></svg>'
+      '<svg><rect x="0" y="0" width="192" height="192" /></svg>'
     )
     const overlay512 = new Buffer(
-      '<svg><rect x="0" y="0" width="512" height="512" rx="128" ry="128"/></svg>'
+      '<svg><rect x="0" y="0" width="512" height="512" /></svg>'
     )
 
     sharp(file.path)
@@ -202,7 +200,8 @@ router.post('/api/upload/profilePicture/', verify, upload.array('image'), async 
         .toBuffer()
         .then(async (data )=> {
             const result = await cloudinaryProfile.uploadBuffer(data)
-            icon64 = result.url
+            url = result.url.slice(4) + 's' + result.url.slice(4)
+            icon64 = url
             console.log("icon64", result.url)
         })
         .catch(err => {
@@ -218,7 +217,8 @@ router.post('/api/upload/profilePicture/', verify, upload.array('image'), async 
         .toBuffer()
         .then(async (data )=> {
             const result = await cloudinaryProfile.uploadBuffer(data)
-            icon192 = result.url
+            url = result.url.slice(4) + 's' + result.url.slice(4)
+            icon192 = url
             console.log("icon192", icon192)
         })
         .catch(err => {
@@ -233,7 +233,8 @@ router.post('/api/upload/profilePicture/', verify, upload.array('image'), async 
         .toBuffer()
         .then(async (data )=> {
             const result = await cloudinaryProfile.uploadBuffer(data)
-            icon512 = result.url
+            url = result.url.slice(4) + 's' + result.url.slice(4)
+            icon512 = url
             fs.unlinkSync(file.path)
 
             User.updateOne(
